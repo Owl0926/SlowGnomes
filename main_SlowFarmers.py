@@ -17,7 +17,6 @@ class Green(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--zoom")
 
         s = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
@@ -76,11 +75,6 @@ class Green(unittest.TestCase):
 
     def plant(self):
         kapusta = self.driver.find_element(By.ID, 'regal_12')
-        # marchew = self.driver.find_element(By.ID, 'regal_6')
-        # rzodkiew = self.driver.find_element(By.ID, 'regal_14')
-        # pomidor = self.driver.find_element(By.ID, 'regal_5')
-        # ogorek = self.driver.find_element(By.ID, 'regal_12')
-        # truskawka = self.driver.find_element(By.ID, 'regal_3')
         kapusta.click()
         self.move_cursor_plant()
 
@@ -88,19 +82,7 @@ class Green(unittest.TestCase):
         self.driver.find_element(By.XPATH, Field.communicate_gnome)
 
     def test_complex(self):
-        print("login")
         self.login()
-        print("colllect")
         self.collect()
-        print("plant")
         self.plant()
-        print("water")
         self.water()
-    #
-    # def test_plant(self):
-    #     self.login()
-    #     self.plant()
-    #
-    # def test_water(self):
-    #     self.login()
-    #     self.water()

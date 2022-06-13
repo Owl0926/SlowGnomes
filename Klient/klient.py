@@ -1,6 +1,5 @@
 import unittest
 from time import sleep
-import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -32,17 +31,18 @@ class Register(unittest.TestCase):
     def test_client(self):
         self.login()
         clients = self.driver.find_element(By.XPATH, Field.client_count)
-        for x in range(0, 9): # fix it to get automate
+        for x in range(0, 9):  # fix it to get automate
             client_cursor = 'i'+str(x)
             self.driver.find_element(By.ID, client_cursor).click()
             self.driver.find_element(By.ID, Field.client_accept).click()
-            rzodkiewki = self.driver.find_element(By.XPATH, Field.red_plants).text
-            print(rzodkiewki.split()[2])  # name of need to plant
+            need_to_plant = self.driver.find_element(By.XPATH, Field.red_plants).text
+            print(need_to_plant.split()[2])
 
     def test_regal(self):
         self.login()
         for x in range(1, 8):
             print(str(x))
+            print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").id)
             self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").click()
-            print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]"))
+            # print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]"))
             sleep(1)
