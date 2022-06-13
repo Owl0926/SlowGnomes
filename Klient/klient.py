@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from Rejestracja.Field import *
+from Rejestracja.Field import Field
 
 
 class Register(unittest.TestCase):
@@ -31,18 +31,20 @@ class Register(unittest.TestCase):
     def test_client(self):
         self.login()
         clients = self.driver.find_element(By.XPATH, Field.client_count)
-        for x in range(0, 9):  # fix it to get automate
+
+        for x in range(0, 8):  # fix it to get automate
             client_cursor = 'i'+str(x)
             self.driver.find_element(By.ID, client_cursor).click()
             self.driver.find_element(By.ID, Field.client_accept).click()
+            sleep(1)
             need_to_plant = self.driver.find_element(By.XPATH, Field.red_plants).text
             print(need_to_plant.split()[2])
 
-    def test_regal(self):
-        self.login()
-        for x in range(1, 8):
-            print(str(x))
-            print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").id)
-            self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").click()
-            # print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]"))
-            sleep(1)
+    # def test_regal(self):
+    #     self.login()
+    #     for x in range(1, 8):
+    #         print(str(x))
+    #         print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").id)
+    #         self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").click()
+    #         # print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]"))
+    #         sleep(1)
