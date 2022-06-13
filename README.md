@@ -17,7 +17,7 @@
 2. Fix mouse speed on Collect.
 3. Every XPath move to _field.py_
 
-**v0.5** 13.06.22
+**v0.5** 10.06.22
 HOW TO SETUP JENKINS
 1. https://www.jenkins.io/doc/book/installing/windows/
 2. C:\users\username java –jar C:\tools\jenkins\jenkins.war 
@@ -25,3 +25,6 @@ HOW TO SETUP JENKINS
 4. settings Jenkins: 
 call ./venv/Scripts/activate
 pytest main_SlowFarmers.py
+
+**v0.6** 13.06.22
+1. Fix imports

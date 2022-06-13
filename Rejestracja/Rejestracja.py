@@ -8,7 +8,7 @@ from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from Field import *
-from robotframeworkPractice.SlowFarmers.Rejestracja.Generator import *
+from Generator import *
 
 
 class Register(unittest.TestCase):
