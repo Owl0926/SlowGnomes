@@ -33,7 +33,6 @@ class Green(unittest.TestCase):
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
     def collect(self):
-        # self.driver.find_element(By.ID, Field.garden_collect).click()
         self.move_cursor_collect()
 
     def water(self):
@@ -45,12 +44,18 @@ class Green(unittest.TestCase):
             self.driver.find_element(By.ID, Field.garden_collect).click()
             garden_tile_cursor = 'gardenTile' + str(c) + '_cursor'
             field = self.driver.find_element(By.ID, garden_tile_cursor)
-            ActionChains(self.driver, duration=5).move_to_element(field).perform()
+            ActionChains(self.driver, duration=0).move_to_element(field).perform()
             if str(2) in field.get_attribute('alt'):
                 field.click()
             elif '3' in field.get_attribute('alt'):
                 field.click()
             elif '4' in field.get_attribute('alt'):
+                field.click()
+            elif '5' in field.get_attribute('alt'):
+                field.click()
+            elif '6' in field.get_attribute('alt'):
+                field.click()
+            elif '7' in field.get_attribute('alt'):
                 field.click()
 
     def move_cursor_water(self):
@@ -70,7 +75,7 @@ class Green(unittest.TestCase):
                 field.click()
 
     def plant(self):
-        kapusta = self.driver.find_element(By.ID, 'regal_6')
+        kapusta = self.driver.find_element(By.ID, 'regal_12')
         # marchew = self.driver.find_element(By.ID, 'regal_6')
         # rzodkiew = self.driver.find_element(By.ID, 'regal_14')
         # pomidor = self.driver.find_element(By.ID, 'regal_5')
@@ -81,10 +86,6 @@ class Green(unittest.TestCase):
 
     def gnome_message(self):
         self.driver.find_element(By.XPATH, Field.communicate_gnome)
-
-    # def test_collect(self):
-    #     self.login()
-    #     self.collect()
 
     def test_complex(self):
         print("login")
