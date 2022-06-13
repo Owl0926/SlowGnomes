@@ -33,7 +33,7 @@ class Green(unittest.TestCase):
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
     def collect(self):
-        self.driver.find_element(By.ID, Field.garden_collect).click()
+        # self.driver.find_element(By.ID, Field.garden_collect).click()
         self.move_cursor_collect()
 
     def water(self):
@@ -42,6 +42,7 @@ class Green(unittest.TestCase):
 
     def move_cursor_collect(self):
         for c in range(1, 205):
+            self.driver.find_element(By.ID, Field.garden_collect).click()
             garden_tile_cursor = 'gardenTile' + str(c) + '_cursor'
             field = self.driver.find_element(By.ID, garden_tile_cursor)
             ActionChains(self.driver, duration=5).move_to_element(field).perform()
@@ -69,7 +70,7 @@ class Green(unittest.TestCase):
                 field.click()
 
     def plant(self):
-        kapusta = self.driver.find_element(By.ID, 'regal_3')
+        kapusta = self.driver.find_element(By.ID, 'regal_6')
         # marchew = self.driver.find_element(By.ID, 'regal_6')
         # rzodkiew = self.driver.find_element(By.ID, 'regal_14')
         # pomidor = self.driver.find_element(By.ID, 'regal_5')
@@ -81,20 +82,24 @@ class Green(unittest.TestCase):
     def gnome_message(self):
         self.driver.find_element(By.XPATH, Field.communicate_gnome)
 
-    def test_collect(self):
-        self.login()
-        self.collect()
+    # def test_collect(self):
+    #     self.login()
+    #     self.collect()
 
     def test_complex(self):
+        print("login")
         self.login()
+        print("colllect")
         self.collect()
+        print("plant")
         self.plant()
+        print("water")
         self.water()
-
-    def test_plant(self):
-        self.login()
-        self.plant()
-
-    def test_water(self):
-        self.login()
-        self.water()
+    #
+    # def test_plant(self):
+    #     self.login()
+    #     self.plant()
+    #
+    # def test_water(self):
+    #     self.login()
+    #     self.water()
