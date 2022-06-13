@@ -4,6 +4,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support import wait
 from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
@@ -39,7 +40,7 @@ class Register(unittest.TestCase):
         select.select_by_index(20)
         self.driver.find_element(By.ID, Field.login_button).click()
         sleep(2)
-        self.driver.find_element(By.XPATH, Field.garden_cookies).click()
+        # self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
     def How_much_account(self, x):
         def write_json(new_data, filename='json_data.json'):
@@ -65,24 +66,26 @@ class Register(unittest.TestCase):
             self.driver.find_element(By.ID, Field.logged_logout).click()
             self.driver.find_element(By.XPATH, Field.back_to_homePage).click()
 
-    def test_login_json(self):
-        f = open('json_data.json')
-        data = json.load(f)
-        for i in data['user_details']:
-            self.login(i['login'], i['password'])
-            self.driver.find_element(By.ID, Field.logged_logout).click()
-            self.driver.find_element(By.XPATH, Field.back_to_homePage).click()
-        f.close()
-
     def test_fail_register(self):
         self.register('helloworld36', 'helloworld369', 'helloworld369', 'helloworld@369.pl')
         self.driver.find_element(By.XPATH, Field.register_Error)
-        sleep(5)
+        sleep(1)
 
     def test_register_single_generated(self):
         self.register(gen_login, gen_password, gen_gardenName, gen_email)
         print("Created account login :", gen_login, "\n password: ", gen_password)
-        sleep(5)
+        sleep(1)
 
     def test_multiple_register(self):
-        self.How_much_account(1)
+        self.How_much_account(2)
+
+    def test_login_json(self):
+        f = open('json_data.json')
+        data = json.load(f)
+        for i in data['user_details']:
+            print(i['login'], i['password'])
+            self.login(i['login'], i['password'])
+            # wait.WebDriverWait((self.driver.find_element(By.ID,Field.logged_logout)), 50)
+            self.driver.find_element(By.ID, Field.logged_logout).click()
+            self.driver.find_element(By.XPATH, Field.back_to_homePage).click()
+        f.close()
