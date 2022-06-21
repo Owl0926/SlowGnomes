@@ -74,7 +74,7 @@ class Green(unittest.TestCase):
                 field.click()
 
     def plant(self):
-        kapusta = self.driver.find_element(By.ID, 'regal_2')
+        kapusta = self.driver.find_element(By.ID, 'regal_14')
         kapusta.click()
         self.move_cursor_plant()
 
