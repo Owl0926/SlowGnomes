@@ -33,3 +33,6 @@ pytest main_SlowFarmers.py
 **v1.0** 13.06.22
 1. Now _main_slow_farmers.py_ is execute from gitHub.
 Settings jenkins: https://www.blazemeter.com/blog/how-to-integrate-your-github-repository-to-your-jenkins-project
+
+**v1.1** 04.07.22
+1. Faster collect
