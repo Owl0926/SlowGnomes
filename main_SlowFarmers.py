@@ -17,6 +17,8 @@ class Green(unittest.TestCase):
         chrome_options = Options()
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-extensions")
+        # After disable cookies automate loggout
+        # chrome_options.add_experimental_option("prefs", {"profile.default_content_setting_values.cookies": 2})
 
         s = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
@@ -37,6 +39,21 @@ class Green(unittest.TestCase):
     def water(self):
         self.driver.find_element(By.ID, Field.garden_water).click()
         self.move_cursor_water()
+
+    def faster_collect(self):
+        self.driver.find_element(By.ID, Field.garden_collect).click()
+        # Check it
+        alt2 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=2]")
+        alt3 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=3]")
+        alt4 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=4]")
+
+        sleep(1)
+        for i in alt4:
+            i.click()
+        for i in alt3:
+            i.click()
+        for i in alt2:
+            i.click()
 
     def move_cursor_collect(self):
         for c in range(1, 205):
@@ -74,15 +91,20 @@ class Green(unittest.TestCase):
                 field.click()
 
     def plant(self):
-        kapusta = self.driver.find_element(By.ID, 'regal_5')
-        kapusta.click()
+        collect_number = self.driver.find_element(By.ID, 'regal_49')
+        collect_number.click()
         self.move_cursor_plant()
 
     def gnome_message(self):
         self.driver.find_element(By.XPATH, Field.communicate_gnome)
 
+    # def test_faster_collct(self):
+    #     self.login()
+    #     self.faster_collect()
+
     def test_complex(self):
         self.login()
-        self.collect()
+        self.faster_collect()
+        # self.collect()
         self.plant()
         self.water()
