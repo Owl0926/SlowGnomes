@@ -28,7 +28,7 @@ class Green(unittest.TestCase):
         self.driver.find_element(By.ID, Field.login_user).send_keys(Field.username_main_20)
         self.driver.find_element(By.ID, Field.login_password).send_keys(Field.password_main_20)
         select = Select(self.driver.find_element(By.ID, Field.login_server))
-        select.select_by_index(19)
+        select.select_by_index(20)
         self.driver.find_element(By.ID, Field.login_button).click()
         sleep(2)
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
@@ -43,16 +43,16 @@ class Green(unittest.TestCase):
     def faster_collect(self):
         self.driver.find_element(By.ID, Field.garden_collect).click()
         # Check it
-        alt2 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=2]")
-        alt3 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=3]")
-        alt4 = self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=4]")
-
         sleep(1)
-        for i in alt4:
+        for i in self.driver.find_elements(By.XPATH, Field.alt2):
             i.click()
-        for i in alt3:
+        for i in self.driver.find_elements(By.XPATH, Field.alt3):
             i.click()
-        for i in alt2:
+        for i in self.driver.find_elements(By.XPATH, Field.alt4):
+            i.click()
+        for i in self.driver.find_elements(By.XPATH, Field.alt5):
+            i.click()
+        for i in self.driver.find_elements(By.XPATH, Field.alt6):
             i.click()
 
     def move_cursor_collect(self):
@@ -98,12 +98,26 @@ class Green(unittest.TestCase):
     def gnome_message(self):
         self.driver.find_element(By.XPATH, Field.communicate_gnome)
 
-    # def test_faster_collct(self):
-    #     self.login()
-    #     self.faster_collect()
+    def daily_login_bonus(self):
+        daily_symbol = self.driver.find_element(By.ID, "dailyloginbonus_symbol")
+        close_button = self.driver.find_element(By.XPATH, "//div[@onclick='dailyloginbonus.close()']")
+        claim_reward = self.driver.find_element(By.XPATH, "//div[@id='dailyloginbonus_button']//div[2]")
+        sleep(1)
+        daily_symbol.click()
+        if claim_reward.is_displayed():
+            claim_reward.click()
+            print("Reward claimed")
+            close_button.click()
+        else:
+            close_button.click()
+
+            print("Reward not claimed")
+            
 
     def test_complex(self):
         self.login()
+        self.daily_login_bonus()
+        sleep(2)
         self.faster_collect()
         # self.collect()
         self.plant()

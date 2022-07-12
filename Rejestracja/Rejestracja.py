@@ -40,8 +40,6 @@ class Register(unittest.TestCase):
         select.select_by_index(20)
         self.driver.find_element(By.ID, Field.login_button).click()
         sleep(2)
-        # self.driver.find_element(By.XPATH, Field.garden_cookies).click()
-
     def How_much_account(self, x):
         def write_json(new_data, filename='json_data.json'):
             with open(filename, 'r+') as file:

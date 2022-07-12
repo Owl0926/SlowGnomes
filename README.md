@@ -35,4 +35,7 @@ pytest main_SlowFarmers.py
 Settings jenkins: https://www.blazemeter.com/blog/how-to-integrate-your-github-repository-to-your-jenkins-project
 
 **v1.1** 04.07.22
-1. Faster collect
+1. Faster collect.
+
+**v1.2** 12.07.22
+1. Added claiming daily login rewards.

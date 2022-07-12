@@ -14,6 +14,8 @@ class Field:
     # Login
     login_user = 'login_user'
     login_password = 'login_pass'
+    login_user2 = 'zdADUugwD'
+    login_password2 ='Z,;`S'
     login_button = 'submitlogin'
     username_main_20 = 'helloworld'
     password_main_20 = 'helloworld2'
@@ -30,6 +32,13 @@ class Field:
     cursor_plant = 'cursor-pflanzen-v'
     logged_logout = "logout"
     wyrywanie_chwasta = "//div[normalize-space()='Koszt: 2,50 kt']"
+
+    # Collect by alt
+    alt2 = "//div[@id='gardenDiv']/div/img[2][@alt=2]"
+    alt3 = "//div[@id='gardenDiv']/div/img[2][@alt=3]"
+    alt4 = "//div[@id='gardenDiv']/div/img[2][@alt=4]"
+    alt5 = "//div[@id='gardenDiv']/div/img[2][@alt=5]"
+    alt6 = "//div[@id='gardenDiv']/div/img[2][@alt=6]"
 
     # Klient
     red_plants = "//div[@id='wimpVerkauf']/div[4]/div[@class='rot']"
