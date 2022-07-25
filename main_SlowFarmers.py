@@ -28,7 +28,7 @@ class Green(unittest.TestCase):
         self.driver.find_element(By.ID, Field.login_user).send_keys(Field.username_main_20)
         self.driver.find_element(By.ID, Field.login_password).send_keys(Field.password_main_20)
         select = Select(self.driver.find_element(By.ID, Field.login_server))
-        select.select_by_index(20)
+        select.select_by_index(19)
         self.driver.find_element(By.ID, Field.login_button).click()
         sleep(2)
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
