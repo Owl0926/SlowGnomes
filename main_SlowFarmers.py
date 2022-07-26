@@ -66,6 +66,7 @@ class Green(unittest.TestCase):
             sleep(2)
             button_basedialog.click()
             print("kkk")
+            
     def move_cursor_collect(self):
         for c in range(1, 205):
             self.driver.find_element(By.ID, Field.garden_collect).click()
