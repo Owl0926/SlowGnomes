@@ -62,7 +62,6 @@ class Green(unittest.TestCase):
     def kropelka_check(self):
         basedialog = self.driver.find_element(By.ID, "baseDialogBgTL")
         button_basedialog = self.driver.find_element(By.ID, "baseDialogButton")
-        sleep(1)
         if basedialog.is_displayed():
             button_basedialog.click()
             print("kkk")
