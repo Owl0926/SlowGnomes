@@ -44,3 +44,5 @@ class Field:
     red_plants = "//div[@id='wimpVerkauf']/div[4]/div[@class='rot']"
     client_accept = "wimpVerkaufYes"
     client_count = "//div[@id='wimpareaWimps']/img"
+
+    # Speciat

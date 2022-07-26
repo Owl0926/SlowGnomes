@@ -1,5 +1,5 @@
 **v0.1**    03.06.22
-
+# START java –jar C:\tools\Jenkins\Jenkins.war
 0. Setting file with your date
 1. Automaticly login to game
 2. Collect all available seeds
