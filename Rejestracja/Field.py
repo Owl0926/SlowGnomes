@@ -15,7 +15,7 @@ class Field:
     login_user = 'login_user'
     login_password = 'login_pass'
     login_user2 = 'zdADUugwD'
-    login_password2 ='Z,;`S'
+    login_password2 = 'Z,;`S'
     login_button = 'submitlogin'
     username_main_20 = 'helloworld'
     password_main_20 = 'helloworld2'
@@ -41,10 +41,22 @@ class Field:
     alt5 = "//div[@id='gardenDiv']/div/img[2][@alt=5]"
     alt6 = "//div[@id='gardenDiv']/div/img[2][@alt=6]"
 
-    # Klient
+    # Client
     red_plants = "//div[@id='wimpVerkaufProducts']/div[@class='rot']"
     blue_plants = "//div[@id='wimpVerkaufProducts']/div[@class='blau']"
     client_accept = "wimpVerkaufYes"
-    client_count = "//div[@id='wimpareaWimps']/img"
+    client = "//div[@id='wimpareaWimps']/img"
+    client_want = "//div[@id='wimpVerkaufProducts']/div"
+    decision_later = "wimpVerkaufLater"
 
-    # Speciat
+    # Regal
+    regal = "//div[@id='regal']/div"
+    zasiej_window = "//div[@id='lager_name']"
+
+    # Close tabs
+    daily_symbol = "dailyloginbonus_symbol"
+    close_reward_button = "//div[@onclick='dailyloginbonus.close()']"
+    claim_reward = "//div[@id='dailyloginbonus_button']//div[2]"
+    close_offer = "//div[@onclick='specialoffer.close()']"
+    special_offer = "specialoffer"
+    new_offer = "//div[@id='newszwergLayer']/img"
