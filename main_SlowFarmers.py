@@ -23,6 +23,7 @@ class Green(unittest.TestCase):
         s = Service(ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
         self.driver.get(Field.homePage)
+        self.driver.delete_all_cookies()
 
     def login(self):
         self.driver.find_element(By.ID, Field.login_user).send_keys(Field.username_main_20)
@@ -42,7 +43,6 @@ class Green(unittest.TestCase):
 
     def faster_collect(self):
         self.driver.find_element(By.ID, Field.garden_collect).click()
-        sleep(1)
         for i in self.driver.find_elements(By.XPATH, Field.alt2):
             i.click()
             self.kropelka_check()
@@ -66,7 +66,7 @@ class Green(unittest.TestCase):
             sleep(2)
             button_basedialog.click()
             print("kkk")
-            
+
     def move_cursor_collect(self):
         for c in range(1, 205):
             self.driver.find_element(By.ID, Field.garden_collect).click()
@@ -103,10 +103,15 @@ class Green(unittest.TestCase):
                 field.click()
 
     def plant(self):
-        collect_number = self.driver.find_element(By.ID, 'regal_49')
-        collect_number.click()
-        self.move_cursor_plant()
 
+        self.move_cursor_plant()
+        # c = 1
+        # ilosc_plantow = self.driver.find_element(By.XPATH, "//div[@class='anz'][normalize-space()='" + str(c) + "']")
+        # if ilosc_plantow:
+        #     print("problem")
+        #     alternative_plant = self.driver.find_element(By.ID, 'regal_35')
+        #     alternative_plant.click()
+        #     self.move_cursor_plant()
         # NEW ============================================================================================
     def daily_login_bonus(self):
         daily_symbol = self.driver.find_element(By.ID, "dailyloginbonus_symbol")
@@ -129,10 +134,52 @@ class Green(unittest.TestCase):
             close_offer_button.click()
             print("Special offer closed")
 
+    def test_regalcheck_and_clientcheck(self):
+        self.login()
+        klienci = self.driver.find_elements(By.XPATH, "//div[@id='wimpareaWimps']/img")
+        need_list = []
+        for x in klienci:
+            self.driver.find_element(By.ID, x.get_attribute('id')).click()  # przeklikuje klientow
+            list = self.driver.find_elements(By.XPATH, "//div[@id='wimpVerkaufProducts']/div")
+            for z in list:
+                if z.get_attribute('class') == 'rot':
+                    need_list.append(z.text.split()[2])
+        pozniej_button = self.driver.find_element(By.ID,"wimpVerkaufLater")
+        pozniej_button.click()
+        print("need_list:", set(need_list))
+        regal = self.driver.find_elements(By.XPATH, "//div[@id='regal']/div")
+        stan = {}
+        d = 1 + len(regal)
+        for _ in regal:  # zbiera wszystkie przedmioty z regalu i wpisuje je do tablicy
+            d -= 1  # dekrementacja
+            kielich = self.driver.find_element(By.XPATH, "//div[@id='regal']/div[" + str(d) + "]")  # regal
+            ActionChains(self.driver, 50).move_to_element(kielich).click().perform()  # przeklikanie regalu
+
+            zasiej_name = self.driver.find_element(By.XPATH, "//div[@id='lager_name']").text  # zebrabnie info z ZASIEJ
+            stan[zasiej_name] = kielich.get_attribute('id')  # dodanie do dicta produkt z regalu oraz
+        print("Stan", stan)
+        clear_n = []
+        for i in need_list:  # porownoje regal z tym co potrzeba
+            if i not in clear_n:
+                clear_n.append(i)
+            else:
+                print(i)
+        print("Mozemy zasadzic")
+        # self.faster_collect()
+        for i in stan:
+            if i in clear_n:
+                print(i,"i jego id",stan.get(i))
+                ba = self.driver.find_element(By.ID,stan.get(i))
+                ba.click()
+                self.move_cursor_plant()
+                sleep(5)
+        self.move_cursor_water()
+
     def test_complex(self):
         self.login()
-        self.special_offer()
-        self.daily_login_bonus()
+        # self.special_offer()
+        # self.daily_login_bonus()
         self.faster_collect()
-        self.plant()
-        self.water()
+        self.driver.find_element(By.ID, 'regal_36').click()
+        # self.plant()
+        # self.water()

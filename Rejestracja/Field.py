@@ -34,6 +34,7 @@ class Field:
     wyrywanie_chwasta = "//div[normalize-space()='Koszt: 2,50 kt']"
 
     # Collect by alt
+
     alt2 = "//div[@id='gardenDiv']/div/img[2][@alt=2]"
     alt3 = "//div[@id='gardenDiv']/div/img[2][@alt=3]"
     alt4 = "//div[@id='gardenDiv']/div/img[2][@alt=4]"
@@ -41,7 +42,8 @@ class Field:
     alt6 = "//div[@id='gardenDiv']/div/img[2][@alt=6]"
 
     # Klient
-    red_plants = "//div[@id='wimpVerkauf']/div[4]/div[@class='rot']"
+    red_plants = "//div[@id='wimpVerkaufProducts']/div[@class='rot']"
+    blue_plants = "//div[@id='wimpVerkaufProducts']/div[@class='blau']"
     client_accept = "wimpVerkaufYes"
     client_count = "//div[@id='wimpareaWimps']/img"
 

@@ -1,13 +1,13 @@
 import unittest
 from time import sleep
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from Rejestracja.Field import Field
-
 
 class Register(unittest.TestCase):
     def setUp(self):
@@ -28,23 +28,39 @@ class Register(unittest.TestCase):
         sleep(2)
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
-    def test_client(self):
+    def test_regalcheck_and_clientcheck(self):
         self.login()
-        clients = self.driver.find_element(By.XPATH, Field.client_count)
+        klienci = self.driver.find_elements(By.XPATH, "//div[@id='wimpareaWimps']/img")
+        need_list = []
+        for x in klienci:
+            self.driver.find_element(By.ID, x.get_attribute('id')).click()  # przeklikuje klientow
+            list = self.driver.find_elements(By.XPATH, "//div[@id='wimpVerkaufProducts']/div")
+            for z in list:
+                if z.get_attribute('class') == 'rot':
+                    need_list.append(z.text.split()[2])
+        print("need_list:", set(need_list))
+        regal = self.driver.find_elements(By.XPATH, "//div[@id='regal']/div")
+        stan = {}
+        d = 1 + len(regal)
+        for _ in regal:  # zbiera wszystkie przedmioty z regalu i wpisuje je do tablicy
+            d -= 1  # dekrementacja
+            kielich = self.driver.find_element(By.XPATH, "//div[@id='regal']/div[" + str(d) + "]")  # regal
+            ActionChains(self.driver, 50).move_to_element(kielich).click().perform()  # przeklikanie regalu
 
-        for x in range(0, 8):  # fix it to get automate
-            client_cursor = 'i'+str(x)
-            self.driver.find_element(By.ID, client_cursor).click()
-            self.driver.find_element(By.ID, Field.client_accept).click()
-            sleep(1)
-            need_to_plant = self.driver.find_element(By.XPATH, Field.red_plants).text
-            print(need_to_plant.split()[2])
+            zasiej_name = self.driver.find_element(By.XPATH, "//div[@id='lager_name']").text  # zebrabnie info z ZASIEJ
+            stan[zasiej_name] = kielich.get_attribute('id')  # dodanie do dicta produkt z regalu oraz
+        print("Stan", stan)
+        clear_n = []
+        for i in need_list:
+            if i not in clear_n:
+                clear_n.append(i)
+        # print("need_list",clear_n)
+        print("Mozemy zasadzic")
 
-    # def test_regal(self):
-    #     self.login()
-    #     for x in range(1, 8):
-    #         print(str(x))
-    #         print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").id)
-    #         self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]").click()
-    #         # print(self.driver.find_element(By.XPATH, "//div[@id='regal']/div["+str(x)+"]"))
-    #         sleep(1)
+        for i in stan:
+            if i in clear_n:
+                # self.driver.find_element(By.ID,stan.get(i)).click
+                print(i,"i jego id",stan.get(i))
+                ba = self.driver.find_element(By.ID,stan.get(i))
+                ba.click()
+                sleep(5)

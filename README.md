@@ -39,3 +39,9 @@ Settings jenkins: https://www.blazemeter.com/blog/how-to-integrate-your-github-r
 
 **v1.2** 12.07.22
 1. Added claiming daily login rewards.
+
+***
+**v2.0** 05.08.2022r
+1. Check customers needs.
+2. Seed plant if available customers needs.
+3. Close special offers tab.
