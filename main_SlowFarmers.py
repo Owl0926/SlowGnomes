@@ -63,7 +63,6 @@ class Green(unittest.TestCase):
         basedialog = self.driver.find_element(By.ID, "baseDialogBgTL")
         button_basedialog = self.driver.find_element(By.ID, "baseDialogButton")
         if basedialog.is_displayed():
-            sleep(2)
             button_basedialog.click()
             print("kkk")
 
