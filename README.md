@@ -70,3 +70,6 @@ _java –jar C:\tools\Jenkins\Jenkins.war_
 2. Fix faster collect.
 3. Fix seed plant which customer want.
 4. Faster script
+
+**v2.2** 09.08.2022r
+1. Changes in README.md
