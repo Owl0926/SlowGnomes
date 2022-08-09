@@ -97,7 +97,7 @@ class Green(unittest.TestCase):
                     need_list.append(z.text.split()[2])
         later_button = self.driver.find_element(By.ID, Field.decision_later)
         later_button.click()
-        #  Koniec obslugiwania klientow
+
         print("need_list:", set(need_list))
         regal = self.driver.find_elements(By.XPATH, Field.regal)
         stan = {}
@@ -110,7 +110,7 @@ class Green(unittest.TestCase):
             stan[zasiej_name] = item.get_attribute('id')  # add to dictionary product from regal
 
         print("Stan", stan)
-        normal_garden = self.driver.find_element(By.XPATH,"//div[@id='stockSwitches']/div[@class='normal active']")
+        normal_garden = self.driver.find_element(By.XPATH, "//div[@id='stockSwitches']/div[@class='normal active']")
         normal_garden.click()
         clear_n = []
         for i in need_list:  # compare regal and client wants
@@ -126,7 +126,7 @@ class Green(unittest.TestCase):
                 sleep(1)
                 print("after plant")
         else:
-            print("Brak : ",clear_n, "na stanie")
+            print("We don't have : ", clear_n)
 
     def close_tabs(self):
         new_offer = self.driver.find_element(By.XPATH, Field.new_offer)

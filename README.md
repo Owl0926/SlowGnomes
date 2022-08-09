@@ -1,13 +1,32 @@
-HOW TO SETUP JENKINS
-1. https://www.jenkins.io/doc/book/installing/windows/
-2. C:\users\username java –jar C:\tools\jenkins\jenkins.war 
-3. Easily change the execution time : 10 min -> H/10 * * * *
-4. settings Jenkins: 
-call ./venv/Scripts/activate
-pytest main_SlowFarmers.py
-# START java –jar C:\tools\Jenkins\Jenkins.war
-Settings jenkins: https://www.blazemeter.com/blog/how-to-integrate-your-github-repository-to-your-jenkins-project
+# Manual
 ***
+0. Requirements
+
+Install lib from _**requirements.txt**_ 
+1. **How to script work**
+
+Automatically login usage credentials in function **login** <br>
+Click on every harvestable plant. <br>
+Check every customer needs and current supply. <br>
+If in stock then script is planing. <br>
+Else script randomly choose what to plant <br>
+On the end water every seed.
+2. **How to setup jenkins <br>**
+
+https://www.jenkins.io/doc/book/installing/windows/ <br>
+C:\users\username java –jar C:\tools\jenkins\jenkins.war <br>
+Easily change the execution time : 10 min -> H/10 * * * * <br>
+settings Jenkins: <br>
+_call ./venv/Scripts/activate_ <br>
+_pytest main_SlowFarmers.py_
+3. **How to connect gitHub with Jenkins <br>**
+
+https://www.blazemeter.com/blog/how-to-integrate-your-github-repository-to-your-jenkins-project
+4. **How to start server** 
+
+_java –jar C:\tools\Jenkins\Jenkins.war_
+***
+# Changes
 **v0.1**    03.06.22
 
 0. Setting file with your data

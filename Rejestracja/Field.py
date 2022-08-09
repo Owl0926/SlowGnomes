@@ -1,4 +1,3 @@
-
 class Field:
     homePage = "https://zieloneimperium.pl"
     # Register
