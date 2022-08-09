@@ -25,31 +25,30 @@ class Green(unittest.TestCase):
         self.driver.get(Field.homePage)
         self.driver.delete_all_cookies()
 
-    def login(self):
-        self.driver.find_element(By.ID, Field.login_user).send_keys(Field.username_main_20)
-        self.driver.find_element(By.ID, Field.login_password).send_keys(Field.password_main_20)
+    def login(self, login, password, server):
+        self.driver.find_element(By.ID, Field.login_user).send_keys(login)
+        self.driver.find_element(By.ID, Field.login_password).send_keys(password)
         select = Select(self.driver.find_element(By.ID, Field.login_server))
-        select.select_by_index(19)
+        select.select_by_index(server-1)
         self.driver.find_element(By.ID, Field.login_button).click()
         sleep(2)
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
-    def water(self):
-        self.driver.find_element(By.ID, Field.garden_water).click()
-        self.move_cursor_water()
-
     def faster_collect(self):
         self.driver.find_element(By.ID, Field.garden_collect).click()
-        for i in self.driver.find_elements(By.XPATH, Field.alt2):
-            i.click()
-        for i in self.driver.find_elements(By.XPATH, Field.alt3):
-            i.click()
-        for i in self.driver.find_elements(By.XPATH, Field.alt4):
-            i.click()
-        for i in self.driver.find_elements(By.XPATH, Field.alt5):
-            i.click()
-        for i in self.driver.find_elements(By.XPATH, Field.alt6):
-            i.click()
+        for x in range(2, 8):
+            for i in self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt="+str(x)+"]"):
+                i.click()
+        # for i in self.driver.find_elements(By.XPATH, Field.alt2):
+        #     i.click()
+        # for i in self.driver.find_elements(By.XPATH, Field.alt3):
+        #     i.click()
+        # for i in self.driver.find_elements(By.XPATH, Field.alt4):
+        #     i.click()
+        # for i in self.driver.find_elements(By.XPATH, Field.alt5):
+        #     i.click()
+        # for i in self.driver.find_elements(By.XPATH, Field.alt6):
+        #     i.click()
 
     def move_cursor_collect(self):
         for c in range(1, 205):
@@ -70,7 +69,8 @@ class Green(unittest.TestCase):
             elif '7' in field.get_attribute('alt'):
                 field.click()
 
-    def move_cursor_water(self):
+    def water(self):
+        self.driver.find_element(By.ID, Field.garden_water).click()
         for c in range(1, 205):
             garden_tile_cursor = 'gardenTile' + str(c) + '_cursor'
             field = self.driver.find_element(By.ID, garden_tile_cursor)
@@ -86,7 +86,7 @@ class Green(unittest.TestCase):
             if Field.cursor_plant in field.get_attribute('class'):
                 field.click()
 
-    def test_regal_check_and_client_check(self):
+    def regal_check_and_client_check(self):
         clients = self.driver.find_elements(By.XPATH, Field.client)
         need_list = []
         for x in clients:
@@ -153,12 +153,10 @@ class Green(unittest.TestCase):
             print("Reward not claimed")
 
     def test_complex(self):
-        self.login()
+        self.login(login='helloworld', password='helloworld2', server=20)
         # self.close_tabs()
         self.faster_collect()
-        self.test_regal_check_and_client_check()
-        # self.driver.find_element(By.ID, 'regal_15').click()
-        # self.plant()
-        # self.driver.find_element(By.ID, 'regal_33').click()
-        # self.plant()
+        self.regal_check_and_client_check()
+        self.driver.find_element(By.ID, "regal_32").click()
+        self.plant()
         self.water()
