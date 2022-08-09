@@ -97,6 +97,7 @@ class Green(unittest.TestCase):
                     need_list.append(z.text.split()[2])
         later_button = self.driver.find_element(By.ID, Field.decision_later)
         later_button.click()
+        #  Koniec obslugiwania klientow
         print("need_list:", set(need_list))
         regal = self.driver.find_elements(By.XPATH, Field.regal)
         stan = {}
@@ -105,10 +106,12 @@ class Green(unittest.TestCase):
             d -= 1  # decrement regal item
             item = self.driver.find_element(By.XPATH, "//div[@id='regal']/div[" + str(d) + "]")  # regal
             ActionChains(self.driver, 50).move_to_element(item).click().perform()  # take information from regal
-
             zasiej_name = self.driver.find_element(By.XPATH, Field.zasiej_window).text  # take info from zasiej
             stan[zasiej_name] = item.get_attribute('id')  # add to dictionary product from regal
+
         print("Stan", stan)
+        normal_garden = self.driver.find_element(By.XPATH,"//div[@id='stockSwitches']/div[@class='normal active']")
+        normal_garden.click()
         clear_n = []
         for i in need_list:  # compare regal and client wants
             if i not in clear_n:
@@ -120,23 +123,25 @@ class Green(unittest.TestCase):
                 ba = self.driver.find_element(By.ID, stan.get(i))
                 ba.click()
                 self.plant()
-                sleep(5)
+                sleep(1)
+                print("after plant")
         else:
-            print("nothing")
+            print("Brak : ",clear_n, "na stanie")
 
     def close_tabs(self):
-        daily_symbol = self.driver.find_element(By.ID, Field.daily_symbol)
-        close_reward_button = self.driver.find_element(By.XPATH, Field.close_reward_button)
-        claim_reward = self.driver.find_element(By.XPATH, Field.claim_reward)
-        close_offer_button = self.driver.find_element(By.XPATH, Field.close_offer)
-        special_offer = self.driver.find_element(By.ID, Field.special_offer)
         new_offer = self.driver.find_element(By.XPATH, Field.new_offer)
         sleep(1)
         if new_offer.is_displayed():
             new_offer.click()
+        close_offer_button = self.driver.find_element(By.XPATH, Field.close_offer)
+        special_offer = self.driver.find_element(By.ID, Field.special_offer)
         if special_offer.is_displayed():
             close_offer_button.click()
             print("Special offer closed")
+        #  Daily
+        daily_symbol = self.driver.find_element(By.ID, Field.daily_symbol)
+        close_reward_button = self.driver.find_element(By.XPATH, Field.close_reward_button)
+        claim_reward = self.driver.find_element(By.XPATH, Field.claim_reward)
         daily_symbol.click()
         if claim_reward.is_displayed():
             claim_reward.click()
@@ -147,12 +152,13 @@ class Green(unittest.TestCase):
             close_reward_button.click()
             print("Reward not claimed")
 
-
-
     def test_complex(self):
         self.login()
+        # self.close_tabs()
         self.faster_collect()
         self.test_regal_check_and_client_check()
-        self.driver.find_element(By.ID, 'regal_2').click()
-        self.plant()
+        # self.driver.find_element(By.ID, 'regal_15').click()
+        # self.plant()
+        # self.driver.find_element(By.ID, 'regal_33').click()
+        # self.plant()
         self.water()
