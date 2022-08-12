@@ -59,4 +59,4 @@ class Field:
     close_offer = "//div[@onclick='specialoffer.close()']"
     special_offer = "specialoffer"
     new_offer = "//div[@id='newszwergLayer']/img"
-
+    new_tab = "//div[@id='newszwergLayerAdNaviRight']"

@@ -73,3 +73,6 @@ _java –jar C:\tools\Jenkins\Jenkins.war_
 
 **v2.2** 09.08.2022r
 1. Changes in README.md
+
+**v3.0** 12.08.2022r.
+1. GAME IS FULL Automatically
