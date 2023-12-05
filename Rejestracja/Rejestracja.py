@@ -13,12 +13,12 @@ from Generator import *
 
 
 class Register(unittest.TestCase):
-    def setUp(self):
-        chrome_options = Options()
+        def setUp(self):
+        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-extensions")
 
-        s = Service(ChromeDriverManager().install())
+        s = Service()
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
         self.driver.get(Field.homePage)
 
