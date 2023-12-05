@@ -16,8 +16,6 @@ class Field:
     login_user2 = 'zdADUugwD'
     login_password2 = 'Z,;`S'
     login_button = 'submitlogin'
-    username_main_20 = 'helloworld'
-    password_main_20 = 'helloworld2'
     login_server = 'login_server'
 
     back_to_homePage = "//input[@value='Powrót do strony startowej']"
