@@ -1,8 +1,9 @@
-# Manual
+# Zielone imperium
+The goal of the project was to automate the greenimperium.co.uk website. The project was written in Python and automated by Selenium. A jenkins server was also used, and a pipeline was added to allow the script to run itself.
 ***
 0. Requirements
-
-Install lib from _**requirements.txt**_ 
+Install lib from _**requirements.txt**_
+In 122 line set login, password, server
 1. **How to script work**
 
 Automatically login usage credentials in function **login** <br>
@@ -71,8 +72,19 @@ _java –jar C:\tools\Jenkins\Jenkins.war_
 3. Fix seed plant which customer want.
 4. Faster script
 
-**v2.2** 09.08.2022r
-1. Changes in README.md
+**v3.0** 30.11.2023
+1. Added random plant function
+2. Added client accept function
+3. Added Plant what client needs function
 
-**v3.0** 12.08.2022r.
-1. GAME IS FULL Automatically
+***
+Known issue
+1. Client accept and client needs can't be in one test
+
+***
+Complex test order - div
+1. Collect (test_complex_1)
+2. Client accept (test_complex_1)
+3. Client needs (test_complex_2)
+4. Random plant (test_complex_2)
+5. Water (test_complex_2)

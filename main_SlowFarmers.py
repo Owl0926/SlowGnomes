@@ -1,11 +1,11 @@
+import random
+import time
 import unittest
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.select import Select
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from Rejestracja.Field import *
 
@@ -13,13 +13,14 @@ from Rejestracja.Field import *
 class Green(unittest.TestCase):
 
     def setUp(self):
-        chrome_options = Options()
+        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument("--disable-extensions")
-        s = Service(ChromeDriverManager().install())
+        s = Service()
+
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
         self.driver.get(Field.homePage)
         self.driver.delete_all_cookies()
+        assert self.driver.current_url == "https://zieloneimperium.pl/"
 
     def login(self, login, password, server):
         self.driver.find_element(By.ID, Field.login_user).send_keys(login)
@@ -27,17 +28,26 @@ class Green(unittest.TestCase):
         select = Select(self.driver.find_element(By.ID, Field.login_server))
         select.select_by_index(server - 1)
         self.driver.find_element(By.ID, Field.login_button).click()
-        sleep(2)
+        sleep(1)
         self.driver.find_element(By.XPATH, Field.garden_cookies).click()
 
-    def faster_collect(self):
+    def Collect(self):
         for x in range(2, 8):
-            sleep(2)
             self.driver.find_element(By.ID, Field.garden_collect).click()
+            z = 0
             for i in self.driver.find_elements(By.XPATH, "//div[@id='gardenDiv']/div/img[2][@alt=" + str(x) + "]"):
+                self.driver.find_element(By.ID, Field.garden_collect).click()
                 i.click()
+                z += 1
+                event = self.driver.find_element(By.XPATH,"//div[@id='baseDialogButton']/div[2]")
+                if event.is_displayed():
+                    event.click()
+                else:
+                    pass
 
-    def water(self):
+            print("For", x, "alts. Collected", z, "plants")
+
+    def Water(self):
         self.driver.find_element(By.ID, Field.garden_water).click()
         for c in range(1, 205):
             garden_tile_cursor = 'gardenTile' + str(c) + '_cursor'
@@ -45,17 +55,19 @@ class Green(unittest.TestCase):
             ActionChains(self.driver, duration=0).move_to_element(field).perform()
             if Field.cursor_garden_water in field.get_attribute('class'):
                 field.click()
-        sleep(3)
 
-    def plant(self):
+    def Plant(self):
+        h = 0
         for c in range(1, 205):
             garden_tile_cursor = 'gardenTile' + str(c) + '_cursor'
             field = self.driver.find_element(By.ID, garden_tile_cursor)
             ActionChains(self.driver, duration=0).move_to_element(field).perform()
             if Field.cursor_plant in field.get_attribute('class'):
                 field.click()
+                h += 1
+        print("\n -> " + str(h) + " <- planted")
 
-    def regal_check_and_client_check(self):
+    def client_needs(self):
         clients = self.driver.find_elements(By.XPATH, Field.client)
         need_list = []
         for x in clients:
@@ -66,34 +78,27 @@ class Green(unittest.TestCase):
                     need_list.append(z.text.split()[2])
         later_button = self.driver.find_element(By.ID, Field.decision_later)
         later_button.click()
-
-        print("need_list:", set(need_list))
-        regal = self.driver.find_elements(By.XPATH, Field.regal)
+        print("Need_list:", set(need_list))
+        print("We have:")
+        check_regal = self.driver.find_elements(By.XPATH, Field.regal)
+        d = 1 + len(check_regal)
         stan = {}
-        d = 1 + len(regal)
-        for _ in regal:  # collect all items from regal and add to list
+        for _ in check_regal:
             d -= 1  # decrement regal item
             item = self.driver.find_element(By.XPATH, "//div[@id='regal']/div[" + str(d) + "]")  # regal
             ActionChains(self.driver, 50).move_to_element(item).click().perform()  # take information from regal
             zasiej_name = self.driver.find_element(By.XPATH, Field.zasiej_window).text  # take info from zasiej
             stan[zasiej_name] = item.get_attribute('id')  # add to dictionary product from regal
-        normal_garden = self.driver.find_element(By.XPATH, "//div[@id='stockSwitches']/div[@class='normal active']")
-        normal_garden.click()
-        clear_n = []
-        for i in need_list:  # compare regal and client wants
-            if i not in clear_n:
-                clear_n.append(i)
-        for i in stan:
-            if i in clear_n:
-                print("Planting", i, "and his ID", stan.get(i))
-                ba = self.driver.find_element(By.ID, stan.get(i))
-                ba.click()
-                self.plant()
-                sleep(1)
-        else:
-            pass
+            # print(zasiej_name, "id", stan[zasiej_name], "ilosc:", item.text)
+            product = str(stan[zasiej_name])
+            if zasiej_name in need_list:
+                print("Planted", zasiej_name.center(100, "="))
+                plant_remaming = self.driver.find_element(By.XPATH, '//div[@id="regal"]/div[@id="' +
+                                                                  product + '"]')
+                plant_remaming.click()
+                self.Plant()
 
-    def close_tabs(self):
+    def close_pop_up(self):
         if self.driver.find_element(By.XPATH, Field.new_tab).is_displayed():
             self.driver.find_element(By.XPATH, Field.new_offer).click()
         daily_symbol = self.driver.find_element(By.ID, Field.daily_symbol)
@@ -107,11 +112,33 @@ class Green(unittest.TestCase):
         else:
             close_reward_button.click()
 
-    def test_complex(self):
-        self.login(login='helloworld', password='helloworld2', server=20)
-        self.close_tabs()
-        self.faster_collect()
-        self.regal_check_and_client_check()
-        self.driver.find_element(By.ID, "regal_15").click()
-        self.plant()
-        self.water()
+    def client_accept(self):
+        click_on_client = self.driver.find_elements(By.XPATH, Field.client)
+        for x in click_on_client:
+            self.driver.find_element(By.ID, x.get_attribute('id')).click()  # click on every client
+            self.driver.find_element(By.ID, Field.client_accept).click()
+
+    def Start(self):
+        # Uncomment and fill your credentials
+        # self.login(login='', password='', server=)
+        self.close_pop_up()
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def random_plant(self):
+        random_number = random.randint(1, 20)
+        random_plant = self.driver.find_element(By.XPATH, '//div[@id="regal"]/div[' + str(random_number) + ']')
+        random_plant.click()
+        self.Plant()
+        self.Water()
+
+    def test_complex_1(self):
+        self.Start()
+        self.Collect()
+        self.client_accept()
+
+    def test_complex_2(self):
+        self.Start()
+        self.client_needs()
+        self.random_plant()
