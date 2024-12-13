@@ -2,6 +2,8 @@ import random
 
 import unittest
 from time import sleep
+
+from _pytest.skipping import Skip
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
@@ -26,7 +28,7 @@ class Green(unittest.TestCase):
         self.Start()
 
     def tearDown(self):
-        print("Zamykanie")
+        print("Closing")
         sleep(5)
         self.driver.quit()
 
@@ -88,15 +90,17 @@ class Green(unittest.TestCase):
             if Field.cursor_garden_water in field.get_attribute('class') or Field.cursor_plant in field.get_attribute(
                     'class'):
                 field.click()
+
     def collect_event(self):
         event = self.driver.find_element(By.XPATH, Field.collect_fail_event)
-        event2 = self.driver.find_element(By.XPATH,Field.collect_success_exit)
+        event2 = self.driver.find_element(By.XPATH, Field.collect_success_exit)
         if event.is_displayed():
             event.click()
         elif event2.is_displayed():
             event2.click()
         else:
             pass
+
     def Collect(self):
         """
         Method used to gathering every ready plant
@@ -114,13 +118,13 @@ class Green(unittest.TestCase):
 
             print("\nFor", x, "alts. Collected", z, "plants")
 
-    def pelana_automatyzacja(self):
-        # self.alter_collect()
-        # self.client_needs()
-        # self.alter_moznasadzic()
-        # self.random_plant()
-        # self.alter_woda()
-        # self.client_accept()
+    def full_test(self):
+        self.alter_collect()
+        self.client_needs()
+        self.alter_moznasadzic()
+        self.random_plant()
+        self.alter_woda()
+        self.client_accept()
         self.travel_to_different_garden(2)
         self.alter_collect()
         self.client_needs()
@@ -161,7 +165,7 @@ class Green(unittest.TestCase):
             item = self.driver.find_element(By.XPATH, "//div[@id='regal']/div[" + str(d) + "]")  # regal
             ActionChains(self.driver, duration=0).move_to_element(
                 item).click().perform()  # take information from regal
-            zasiej_name = self.driver.find_element(By.XPATH, Field.zasiej_window).text  # take info from zasiej
+            zasiej_name = self.driver.find_element(By.XPATH, Field.to_sow).text  # take info from zasiej
 
             stan[zasiej_name] = item.get_attribute('id')  # add to dictionary product from regal
 
@@ -214,12 +218,12 @@ class Green(unittest.TestCase):
     def alter_moznasadzic(self):
         #  TODO Sprawdic tak aby na sztywno nie podawac co ma sadzic, tylko ma przekazywac
         # self.driver.find_element(By.ID, "regal_6").click()
-        for i in self.driver.find_elements(By.XPATH, Field.mozna_sadzic):
+        for i in self.driver.find_elements(By.XPATH, Field.can_plant):
             i.click()
 
     def alter_collect(self):
-        if self.driver.find_element(By.XPATH,Field.gnom_zbierajacy_plony).is_enabled():
-            self.driver.find_element(By.XPATH, Field.gnom_zbierajacy_plony).click()
+        if self.driver.find_element(By.XPATH, Field.auto_collect_gnome).is_enabled():
+            self.driver.find_element(By.XPATH, Field.auto_collect_gnome).click()
             sleep(2)
             self.collect_event()
         else:
@@ -241,7 +245,7 @@ class Green(unittest.TestCase):
                 i.click()
 
     def plewienie(self):
-        chwasty = [Field.chwast_2, Field.kamie_50, Field.pien_250, Field.kret_500]
+        chwasty = [Field.weed, Field.rock, Field.stump, Field.mole]
         for z in chwasty:
             for x in self.driver.find_elements(By.XPATH, z):
                 x.click()
@@ -264,40 +268,24 @@ class Green(unittest.TestCase):
 
     def test_collect(self):
         self.alter_collect()
-
-    def test_collect_2(self):
         self.travel_to_different_garden(2)
         self.alter_collect()
 
+    def test_klikanie_klientow(self):
+        self.client_needs()
+        self.travel_to_different_garden(2)
+        self.client_needs()
+
     def test_sadzenie(self):
+        self.alter_moznasadzic()
+        self.travel_to_different_garden(2)
         self.alter_moznasadzic()
 
     def test_woda(self):
         self.alter_woda()
-
-    def test_zmiana_ogrodu(self):
-        self.travel_to_different_garden(2)
-
-    def test_sadzenie_2(self):
-        self.travel_to_different_garden(2)
-        self.alter_moznasadzic()
-
-    def test_woda_2(self):
         self.travel_to_different_garden(2)
         self.alter_woda()
 
-    def test_klikanie_klientow(self):
-        self.client_needs()
-
-    def test_klikanie_klientow_2(self):
-        self.travel_to_different_garden(2)
-        self.client_needs()
-
-    def test_plewienia(self):
-        self.plewienie()
-
-    def test_plewienia_2(self):
-        self.travel_to_different_garden(2)
-        self.plewienie()
-    def test_pelny(self):
-        self.pelana_automatyzacja()
+    @Skip
+    def test_full(self):
+        self.full_test()

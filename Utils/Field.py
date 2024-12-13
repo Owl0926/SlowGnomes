@@ -4,24 +4,23 @@ class Field:
     garden_water = 'giessen'
     cursor_garden_water = 'cursor-giessen'
     cursor_plant = 'cursor-pflanzen-v'
-    gnom_zbierajacy_plony = "//div[@class='link harvest']"
-    mozna_sadzic = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/0.gif)')]/.."
+    auto_collect_gnome = "//div[@class='link harvest']"
+    can_plant = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/0.gif)')]/.."
     collect = "//div[substring(@style, string-length(@style) - string-length('_04.gif)') + 1) = '_04.gif)']/.."
     collect_fail_event = "//div[@id='baseDialogButton']/div[2]"
     collect_success_exit = "//div[@id='ernte_log']/img"
-    # Inne ogrody
+    # Other gardens
     travel_garden = "citymap_location_garden"
     city_map = "citymap"
-    ile_ogrodow_dostepnych = "//div[@class ='gardens']/div"
     garden_1 = "//div[@id='citymap_location_garden1']"
     garden_2 = "//div[@id='citymap_location_garden2']"
     bike = "wimpareaCar"
-    # do wyplewienia
+    # to weed
 
-    chwast_2 = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/unkraut_04.gif)')]/.."
-    kamie_50 = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/steine_04.gif)')]/.."
-    pien_250 = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/baumstumpf_04.gif)')]/.."
-    kret_500 = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/maulwurf_04.gif)')]/.."
+    weed = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/unkraut_04.gif)')]/.."
+    rock = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/steine_04.gif)')]/.."
+    stump = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/baumstumpf_04.gif)')]/.."
+    mole = "//div[contains(@style, 'background:url(https://wurzelimperium.wavecdn.net/pics/produkte/maulwurf_04.gif)')]/.."
 
     # Register
     homePage_Register = "//a[@class='register link']"
@@ -56,7 +55,7 @@ class Field:
 
     # Regal
     regal = "//div[@id='regal']/div"
-    zasiej_window = "//div[@id='lager_name']"
+    to_sow = "//div[@id='lager_name']"
 
     # Close tabs
     garden_cookies = "//div/a[@class='cookiemon-btn cookiemon-btn-accept']"
@@ -65,7 +64,3 @@ class Field:
     claim_reward = "//div[@id='dailyloginbonus_button']//div[2]"
     new_offer = "//div[@id='newszwergLayer']/img"
     new_tab = "//div[@id='newszwergLayerAdNaviRight']"
-
-
-for x in range(1,3):
-    print(x)
