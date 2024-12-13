@@ -2,23 +2,20 @@ import unittest
 from time import sleep
 import json
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support import wait
 from selenium.webdriver.support.select import Select
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from Field import *
+from Utils.Field import *
 from Generator import *
 
 
 class Register(unittest.TestCase):
     def setUp(self):
-        chrome_options = Options()
+        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-extensions")
 
-        s = Service(ChromeDriverManager().install())
+        s = Service()
         self.driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
         self.driver.get(Field.homePage)
 
